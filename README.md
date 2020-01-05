@@ -1,4 +1,4 @@
-# ELK 
+#ELK 
 
 ## Logstash
 
@@ -9,7 +9,8 @@
 - 서비스에 어떤 데이터가 필요한지에 따라 어떤 플러그인을 선택하여 필터할것인가를 고민하는게 파이프라인 설계 핵심!
 
 - input(with codec) -> filter -> output(with codec) 을 통해 틀정 형식을 만족하는 로그를 정형화된 형식의 output으로 생성하기
-위한 필터 역할  
+위한 필터 역할 
+
 
 - input 플러그인 : consume data from a source
 => file, redis, beats  
@@ -72,7 +73,7 @@ _Logstash를 테스트 하는 동안에는 이 sincedb 때문에 테스트가 �
 
 - ignore_older => 0 : 로그 스태쉬는 기본적으로 파일이 하루 이상 오래된 경우 input으로 인식하지 않는다. 이러한 동작을 멈추기 위해 사용
 
-**2, Filter 설정**
+**2 Filter 설정**
 
 - filter 작업은 Work Queue 에서 이루어지므로 Worker 를 늘려주면 빠르게 작업할 수 있음 => logstash Tunning 시에 중요 포인트가 됨  
 
@@ -86,22 +87,99 @@ _Logstash를 테스트 하는 동안에는 이 sincedb 때문에 테스트가 �
 => 데이터 필드 단위로 변형할수 있음 / 필드를 타입 변경, join, 이름 변경 가능  
 => elastic search 에서 indexing된 data를 변경하는 것은 상대적으로 어려움. indexing 전에 필드를 변경해서 넘기는 것이 속도도 빠르고
 불필요한 데이터 양도 줄일수 있음 
-- data 
+- date  
 => String을 Data타입으로 변환함. 날짜를 string 타입으로 elastic search에서 indexing하면 query나 aggregation할때 문제 발생 가능  
 
 - json : input 의 json 데이터 구조 유지
 - kv : key-value 형
 
+### Logstash 실습1 ( csv file 분석하기 )
+
+- 샘플 데이터 : stock-data.csv
+
+```
+input {
+   file {
+     path => ""
+     start_position => "beginning"
+     sincedb_path => "/dev/null"
+    }
+}
+ 
+filter {
+   csv {
+     separator => ","
+     columns => ["Date","Open","High","Low","Close","Volume","Adj Close"]
+  }
+ mutate {
+   convert => {
+      "Open" => "float"
+      "High" => "float"
+      "Low" => "float"
+      "Close" => "float"
+      "Volume" => "float"
+      "Adj Close" => "float"
+    }
+  }
+}
+ 
+output {
+   elasticsearch {
+     hosts => "127.0.0.1:9200"
+     index => "stock-%{+YYYY.MM.dd}"
+   }
+ 
+ stdout {
+  }
+}
+```
+- csv 컬럼이 String 이기 때문에 컬럼 타입을 Float로 변경 ( mutate 플러그인 )
+
+### Logstash 실습 2 (Apache Access Log 분석)
+
+샘플 데이터 : sample-access.log
+
+```
+input {
+   file {
+     path => ""
+     start_position => "beginning"
+     sincedb_path => "/dev/null"
+    }
+}
+ 
+filter {
+ grok {
+   match => { "message" => "%{COMMONAPACHELOG}" }
+  }
+ date {
+   match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
+  }
+}
+ 
+output {
+ elasticsearch {
+   hosts => "127.0.0.1:9200"
+   index => "apache-log"
+  }
+ stdout {}
+}
+```
+
+- date 필터를 이용하여 이벤트 timestamp로 만들때 사용 
+- @timestamp 값이 현재시간이 아니라, 로그 메시지에 있는 시간 
+
 ### Log Rotate 사용 시, Log 유실이 없으려면 ? / 파일 복수 개 처리 방식
 
 - 참고 : http://jason-heo.github.io/elasticsearch/2016/02/28/logstash-offset.html
 
-
-
-
 참고 : http://blog.naver.com/PostView.nhn?blogId=kbh3983&logNo=221063092376
 
+## filebeat
 
+## Elastic Search
+
+## Kibana
 
 
 
