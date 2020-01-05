@@ -1,8 +1,9 @@
-#ELK 
+# ELK 
 
 ## Logstash
 
-**실시간 파이프라인 기능을 가진 오픈소스 데이터 수집엔진(DataFlow Engine)**
+**실시간 파이프라인 기능을 가진 오픈소스 데이터 수집엔진(DataFlow Engine)**  
+
 **파이프라인 : 데이터 처리를 위한 logstash 설정(input, filter, output)**
 
 - 서비스에 어떤 데이터가 필요한지에 따라 어떤 플러그인을 선택하여 필터할것인가를 고민하는게 파이프라인 설계 핵심!
@@ -46,15 +47,29 @@ input {
     file{
         path => "/path/access.log"
         start_position => "beginning"
+        sincedb_path => "/dev/null"
         ignore_older => 0
     }
 }
 ```
 
 - path => 입력 파일이 위치한 곳
-- start_position => beginning : 로그 스태쉬는 기본적으로 unix시스템 tail -f 커맨드와 동일하게 동작
-즉, access.log 파일의 증가분에 대해서만 input으로 인식 
-따라서, 증가분이 아니라 항상 파일의 처음부터 input으로 인식하게 하기 위해 start_position=>beginning으로 추가
+- start_position => Logstash를 시작할 때 file의 어디서부터 읽을지를 결정하는 설정  
+=> beginning 과 end(default) 설정을 지원함  
+_주의 : 이 설정은 file을 최초 읽을 때만 적용된다는 점. start_position => "beginning" 인 경우 logstash를 여러번 restart 하더라도 동일한 내용이 출력될 것이라 생각하는데 그렇지 않음! _
+
+- sincedb : logstash가 최초 시작될 때는 file을 읽을 위치가 start_position에 의해 결정되지만, 이후 실행시에는 sincedb에 저장된 offset부터 읽기 시작함!
+
+```
+$ cat ~/.sincedb_a8ae6517118b64cf101eba5a72c366d4
+22253332 1 3 14323
+```
+
+=> 위의 예에서 22253332번 파일은 현재 14323번 offset까지 처리가 되었다는 걸 의미   
+=> logstash를 재실행하는 경우 start_position값과 상관없이 14323 offset부터 file 을 읽기 시작!  
+
+_Logstash를 테스트 하는 동안에는 이 sincedb 때문에 테스트가 좀 번거로움 이경우 /dev/null 로 path 설정!_
+
 - ignore_older => 0 : 로그 스태쉬는 기본적으로 파일이 하루 이상 오래된 경우 input으로 인식하지 않는다. 이러한 동작을 멈추기 위해 사용
 
 **2, Filter 설정**
@@ -76,6 +91,10 @@ input {
 
 - json : input 의 json 데이터 구조 유지
 - kv : key-value 형
+
+### Log Rotate 사용 시, Log 유실이 없으려면 ? / 파일 복수 개 처리 방식
+
+- 참고 : http://jason-heo.github.io/elasticsearch/2016/02/28/logstash-offset.html
 
 
 
