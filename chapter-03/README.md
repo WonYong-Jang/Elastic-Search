@@ -5,8 +5,8 @@
 3. Copy the <b>files</b> directory in your logstash home folder. If logstash was installed at /usr/share/logstash, after copying the files, the structure of files should look like -
 
 ```shell
-/usr/share/logstash/files/products.csv
-/usr/share/logstash/files/logstash_products.conf
+{my_path}/products.csv
+{my_path}/logstash_products.conf
 ```
 
 4. Update the logstash_products.conf file and ensure that it has the correct absolute path of products.csv file on your system.
