@@ -49,7 +49,7 @@ input {
     file{
         path => "/path/access.log"
         start_position => "beginning"
-        sincedb_path => "/dev/null"
+        sincedb_path => "NULL"
         ignore_older => 0
     }
 }
@@ -70,7 +70,7 @@ $ cat ~/.sincedb_a8ae6517118b64cf101eba5a72c366d4
 => 위의 예에서 22253332번 파일은 현재 14323번 offset까지 처리가 되었다는 걸 의미   
 => logstash를 재실행하는 경우 start_position값과 상관없이 14323 offset부터 file 을 읽기 시작!  
 
-_Logstash를 테스트 하는 동안에는 이 sincedb 때문에 테스트가 좀 번거로움 이경우 /dev/null 로 path 설정!_
+_Logstash를 테스트 하는 동안에는 이 sincedb 때문에 테스트가 좀 번거로움 이경우 NULL 로 path 설정!_
 
 - ignore_older => 0 : 로그 스태쉬는 기본적으로 파일이 하루 이상 오래된 경우 input으로 인식하지 않는다. 이러한 동작을 멈추기 위해 사용
 

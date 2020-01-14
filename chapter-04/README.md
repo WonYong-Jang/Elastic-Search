@@ -7,8 +7,8 @@ Steps 1 and 2 are required only if logstash is not previously installed on your 
 3. Copy the <b>files</b> directory in your logstash home folder. If logstash was installed at /usr/share/logstash, after copying the files, the structure of files should look like -
 
 ```shell
-/usr/share/logstash/files/network_traffic_data.zip
-/usr/share/logstash/files/logstash_network_traffic_data.conf
+{my_path}/network_traffic_data.zip
+{my_path}/logstash_network_traffic_data.conf
 ```
 
 4. Unzip network_traffic_data.zip that should create a file network_traffic_data.json in the same directory.
