@@ -176,7 +176,14 @@ output {
 
 참고 : http://blog.naver.com/PostView.nhn?blogId=kbh3983&logNo=221063092376
 
-## filebeat
+## beat
+
+- 로그 수집하는 경량 로그 수집기
+- 바이너리로 실행하며 JVM 처럼 런타임이 필요하지 않기 때문에 매우 가볍고 적은 자원을 소모
+- 비트는 경량 에이전트로 더 적은 자원을 소비하기 때문에 운영 데이터를 수집하고 전달해야하는 엣지 서버에 설치해 사용해야함
+- 즉, 비트는 이벤트 변환 및 분석 로그스태시에서 제공하는 강력한 기능은 없음
+
+
 
 ## Elastic Search
 - 매우 풍부한 Rest API를 제공( Representational State Transfer )
