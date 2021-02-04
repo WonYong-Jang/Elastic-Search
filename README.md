@@ -1,9 +1,6 @@
 # ELK ( 'Learning Elastic Stack 6.0' 교재 )
 
-
-
 ## Logstash
-
 
 **실시간 파이프라인 기능을 가진 오픈소스 데이터 수집엔진(DataFlow Engine)**  
 
@@ -11,6 +8,7 @@
 
 
 - 서비스에 어떤 데이터가 필요한지에 따라 어떤 플러그인을 선택하여 필터할것인가를 고민하는게 파이프라인 설계 핵심!
+
 
 - input(with codec) -> filter -> output(with codec) 을 통해 틀정 형식을 만족하는 로그를 정형화된 형식의 output으로 생성하기
 위한 필터 역할 
@@ -25,10 +23,12 @@
 - codec : input 과 output에서 데이터를 인코딩하거나 디코딩 하기 위한 코덱 지원
 => json, multiline  
 
+
 $ logstash -e 'input { stdin {}} output {stdout {} }'  
 // -e 옵션을 이용하면 설정 파일을 읽지 않고, 그 다음에 오는 명령을 설정으로 인식  
 // 위의 명령어는 stdin -> filter 없음 -> stdout으로 동작하는 로그 스태쉬를 실행  
 // 명령어를 입력 후 hello world를 입력하면 timestamp, host 정보를 붙여서 hello world가 필터 되는것을 확인!  
+
 
 ### 설정파일
  /config 디렉토리에 위치!
