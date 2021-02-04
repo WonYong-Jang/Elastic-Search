@@ -1,9 +1,6 @@
 # ELK ( 'Learning Elastic Stack 6.0' 교재 )
 
-
-
 ## Logstash
-
 
 **실시간 파이프라인 기능을 가진 오픈소스 데이터 수집엔진(DataFlow Engine)**  
 
@@ -11,6 +8,7 @@
 
 
 - 서비스에 어떤 데이터가 필요한지에 따라 어떤 플러그인을 선택하여 필터할것인가를 고민하는게 파이프라인 설계 핵심!
+
 
 - input(with codec) -> filter -> output(with codec) 을 통해 틀정 형식을 만족하는 로그를 정형화된 형식의 output으로 생성하기
 위한 필터 역할 
