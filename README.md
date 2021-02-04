@@ -29,6 +29,7 @@ $ logstash -e 'input { stdin {}} output {stdout {} }'
 // 위의 명령어는 stdin -> filter 없음 -> stdout으로 동작하는 로그 스태쉬를 실행  
 // 명령어를 입력 후 hello world를 입력하면 timestamp, host 정보를 붙여서 hello world가 필터 되는것을 확인!  
 
+
 ### 설정파일
  /config 디렉토리에 위치!
 - logstash.yml : Logstash 실행과 관련된 설정이 들어있음 
