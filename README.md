@@ -23,6 +23,7 @@
 - codec : input 과 output에서 데이터를 인코딩하거나 디코딩 하기 위한 코덱 지원
 => json, multiline  
 
+
 $ logstash -e 'input { stdin {}} output {stdout {} }'  
 // -e 옵션을 이용하면 설정 파일을 읽지 않고, 그 다음에 오는 명령을 설정으로 인식  
 // 위의 명령어는 stdin -> filter 없음 -> stdout으로 동작하는 로그 스태쉬를 실행  
