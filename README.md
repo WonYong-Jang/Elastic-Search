@@ -4,6 +4,7 @@
 
 ## Logstash
 
+
 **실시간 파이프라인 기능을 가진 오픈소스 데이터 수집엔진(DataFlow Engine)**  
 
 **파이프라인 : 데이터 처리를 위한 logstash 설정(input, filter, output)**
