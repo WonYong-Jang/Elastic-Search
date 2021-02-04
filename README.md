@@ -9,6 +9,7 @@
 
 **파이프라인 : 데이터 처리를 위한 logstash 설정(input, filter, output)**
 
+
 - 서비스에 어떤 데이터가 필요한지에 따라 어떤 플러그인을 선택하여 필터할것인가를 고민하는게 파이프라인 설계 핵심!
 
 - input(with codec) -> filter -> output(with codec) 을 통해 틀정 형식을 만족하는 로그를 정형화된 형식의 output으로 생성하기
