@@ -44,6 +44,7 @@ $ logstash -f {설정파일 명}
 ==> Logstash를 파라미터 없이 시작하는 경우, pipeline.yml 파일을 읽어서 해당 파일에 정의된 모든 파이프라인을 시작   
 ==> 반면 Logstash를 -e , -f 를 사용하는 경우 pipeline.yml를 사용하지 않음 
 
+
 **1. Input 설정**
 
 ex) input 설정 예제
